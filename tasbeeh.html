@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>عداد التسبيح</title>
+  <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Amiri', serif;
+      background: linear-gradient(to right, #000000, #001f4d);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+    }
+
+    .counter-box {
+      background-color: #1a2a4d;
+      border-radius: 20px;
+      padding: 2rem;
+      display: inline-block;
+      box-shadow: 0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .screen {
+      background-color: #000;
+      color: #0f0;
+      font-size: 2.5rem;
+      padding: 1rem 2rem;
+      border-radius: 10px;
+      margin-bottom: 1rem;
+      font-family: monospace;
+    }
+
+    .phrase {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    button {
+      font-size: 1.2rem;
+      padding: 0.8rem 1.5rem;
+      border: none;
+      border-radius: 10px;
+      background-color: #004080;
+      color: white;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background-color: #0066cc;
+    }
+
+    @media (max-width: 600px) {
+      .screen {
+        font-size: 2rem;
+      }
+
+      .phrase {
+        font-size: 1.2rem;
+      }
+
+      button {
+        width: 100%;
+      }
+
+      .buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="counter-box">
+    <div class="screen" id="display">0</div>
+    <div class="phrase" id="phrase">سبحان الله</div>
+    <div class="buttons">
+      <button onclick="count()">COUNT</button>
+      <button onclick="resetAll()">RESET</button>
+    </div>
+  </div>
+
+  <script>
+    let countValue = 0;
+    let phase = 0;
+
+    const phrases = [
+      "سبحان الله",
+      "الحمد لله",
+      "الله أكبر",
+      "لا إله إلا الله وحده لا شريك له، له الملك وله الحمد وهو على كل شيء قدير"
+    ];
+
+    const display = document.getElementById("display");
+    const phraseText = document.getElementById("phrase");
+
+    function count() {
+      if (phase < 3) {
+        countValue++;
+        display.textContent = countValue;
+
+        if (countValue === 33) {
+          countValue = 0;
+          phase++;
+          display.textContent = countValue;
+          phraseText.textContent = phrases[phase];
+        }
+      } else if (phase === 3) {
+        // Final phrase: one click only
+        phraseText.textContent = "تم التسبيح ✅";
+        setTimeout(() => {
+          resetAll();
+        }, 2000);
+      }
+    }
+
+    function resetAll() {
+      countValue = 0;
+      phase = 0;
+      display.textContent = countValue;
+      phraseText.textContent = phrases[phase];
+    }
+  </script>
+
+</body>
+</html>
